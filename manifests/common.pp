@@ -5,9 +5,14 @@ class teamcity::common(
 
   group { $group:
     ensure => present,
-    system => true,
-    require => Anchor['teamcity::common::start'],
-    before  => Anchor['teamcity::common::end'],
+    system => true
+  } ->
+
+  user { $user:
+    ensure  => present,
+    system  => true,
+    home    => $home,
+    gid     => $teamcity::common::group
   }
 
   anchor { 'teamcity::common::end': }
